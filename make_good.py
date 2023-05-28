@@ -89,17 +89,6 @@ def execute(args):
     except Exception as e:
         print(e)
 
-    # ec2_client = boto3.client("ssm")
-    # ec2_client.send_command(
-    #     DocumentName="AWS-RunShellScript", # One of AWS' preconfigured documents
-    #     Parameters={'commands': [args.command]},
-    #     InstanceIds=[args.instance_id],
-    # )
-    # ssm_client.send_command(
-    #         InstanceIds=['i-03#####'],
-    #         DocumentName="AWS-RunShellScript",
-    #         Parameters={'commands': ['start ecs']}, )
-
 def terminate_instance(args):
     ec2_client = boto3.client("ec2", region_name=args.region_name)
     response = ec2_client.terminate_instances(InstanceIds=[args.instance_id])
@@ -148,23 +137,8 @@ def read_from_bucket(args):
     print( 'Printing the data frame...')
     print(data.head())
 
-'''
-import boto3
-s3 = boto3.resource('s3')
-bucket = s3.Bucket('aniketbucketpython')
-for obj in bucket.objects.filter(Prefix='aniket1/'):
-    s3.Object(bucket.name,obj.key).delete()
-'''
-
 
 def delete_from_bucket(args):
-    # s3_client = boto3.client('s3')
-    # try:
-    #     resp = s3_client.delete_object( Bucket = args.bucket_name, Key = args.filename)
-    # except Exception as e:
-    #     print( f'There is a problem with reading file: {e}')
-    #     return 
-
 
     s3_client = boto3.resource('s3')
     bucket = s3_client.Bucket(args.bucket_name)
@@ -278,61 +252,6 @@ detele_item_parser.set_defaults(func=delete_from_bucket)
 destroy_bkt_parser = subparsers.add_parser('destroy_bucket', help='destroy bucket')
 destroy_bkt_parser.add_argument('-n', dest='bucket_name', help='bucket name', required=True)
 destroy_bkt_parser.set_defaults(func=destroy_bucket)
-
-
-
-#add_parser.add_argument('-s', dest='sw_true', action='store_true', help='add switch data if set, else add normal data')
-
-
-"""
-
-##########################################
-
-# create_key_pair()
-
-
-# created_inst_id = create_inst(ami_id=ami_list['ubuntu-22.04'])
-
-# created_inst_ip = get_public_ip( created_inst_id)
-
-# print( f'Created instance with id {created_inst_id} and public ip "{created_inst_ip}"')
-
-# get_running_instances()
-
-
-# stop_instance('')
-
-# terminate_instance('')
-
-
-create_key_pair()
-create_inst(ami_id=ami_list['ubuntu-22.04'])
-get_public_ip( created_inst_id)
-get_running_instances()
-
-
-stop_instance('')
-
-terminate_instance('')
-
-
-create_bucket("", "")
-list_buckets()
-upload('', "", "")
-read_from_bucket("")
-destroy_bucket("")
-
-"""
-
-# add_parser = subparsers.add_parser('instance', help='working with instance')
-# add_parser.add_argument('filename', nargs='+', help='file(s) to add to db')
-# add_parser.add_argument('--db', dest='db_file', default=DFLT_DB_NAME, help='db name')
-# add_parser.add_argument('-s', dest='sw_true', action='store_true',
-#                         help='add switch data if set, else add normal data')
-# add_parser.set_defaults(func=add)
-
-
-
 
 
 if __name__ == '__main__':

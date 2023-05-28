@@ -14,4 +14,4 @@ virtualenv venv
 
 source ./venv/bin/activate
 
-pip install -r requironments.txt
+pip install -r requirenments.txt
